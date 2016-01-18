@@ -1,0 +1,414 @@
+\documentclass[a4paper, 11pt]{article}
+
+\usepackage[utf8]{inputenc}
+\usepackage[T1]{fontenc}
+\usepackage[francais]{babel}
+\usepackage{amsfonts}
+\usepackage{sectsty}
+\usepackage{amsmath, amssymb}
+
+% custom package to speed up writing math objects
+\usepackage{speedmath}
+
+\sectionfont{\fontsize{14}{15}\selectfont}
+\subsectionfont{\fontsize{12}{13}\selectfont}
+
+\begin{document}
+
+\title{Recherche Operationelle\\Chapitre 1: Programme Linéaire}
+\author{Arthur Blanleuil}
+
+\maketitle
+
+\section{Formes Canonique et Standard}
+
+\subsection{Définitions}
+
+\begin{itemize}
+  \item Un programme linéaire est un programme dans lequel les variables sont des réels qui doivent satisfaire des inéquations linéaires (contraintes) visant à maximiser ou minimiser une fonction linéaire (fonction objective).
+  \item Un point satisfaisant les contraintes est une solution.
+  \item Une solution minimisant ou maximisant la fonction objective est dite optimale.
+\end{itemize}
+
+\subsection{Remarque}
+On distingue 3 cas de programmes différents.
+Ainsi pour des problème à une variable:
+
+\begin{enumerate}
+  \item Le problème n'a pas de solution: \\
+    $ \{ x \in R ; x \ge 0$ et $x \le -1 \} $
+  \item Le problème a une seule solution optimale: \\
+    trouver $max(x)$ pour $x \le 0$
+  \item La fonction objective n'est pas bornée: \\
+    trouver $max(x)$ pour $x \ge 0$
+\end{enumerate}
+
+\subsection{Définition: Forme Canonique}
+Un programme linéaire peut se représenter sous la forme d'un système comprenant une matrice (contraintes) et un vecteur (fonction objective).
+Si $A$ est la matrice du système, $\vec{x}$ le vecteur des inconnues, $\vec{c}$ le vecteur des contraintes, et $\vec{f}$ le vecteur de la fonction objective, on peut écrire le programme $P$ sous sa forme canonique $PC$:
+
+\[ PC=
+  \begin{cases}
+    A\vec{x} \le \vec{c}\text{, } \vec{x} \ge 0 \\
+    \vec{f}\vec{x} = z (max)
+  \end{cases}
+\]
+
+\subsubsection{Exemple:}
+Soit le programme linéaire $P$ à deux variables $x$ et $y$ ayant pour contraintes le système d'inéquations suivant:
+
+\[ c=
+  \begin{cases}
+    2x + 3y \le 4 \\
+    x - y \le 1
+  \end{cases}
+\]
+
+et la fonction objective $f$ à maximiser telle que:
+
+\[
+  \begin{aligned}
+    & f : \R \times \R \to \R \\
+    & f : \lvtwo{x}{y} \mapsto x + y
+  \end{aligned}
+\]
+
+On note $A$ la matrice ayant autant de lignes que de contrainte, et autant de colonnes que de variables, et dont les valeurs correspondent aux coefficients des inéquations.
+
+\[ A=
+  \begin{pmatrix}
+    2 && 3 \\
+    1 && -1 \\
+  \end{pmatrix}
+\]
+
+On note $\vec{x} = \cvtwo{x}{y}$ le vecteur des inconnues $x$ et $y$, $\vec{c} = \cvtwo{4}{1}$ le vecteur des contraintes, et $\vec{f} = \lvtwo{1}{1}$ le vecteur associé à la fonction linéaire $f$
+
+On peut alors écrire la forme canonique $PC$ du programme $P$:
+
+\[
+  \begin{aligned}
+    PC =
+    \begin{cases}
+      A\vec{x} \le \vec{c}\text{, } \vec{x} \ge 0 \\
+      \vec{f}\vec{x} = z (max)
+    \end{cases}
+    & =
+    \begin{cases}
+      \begin{pmatrix}
+        2 &&  3 \\
+        1 && -1 \\
+      \end{pmatrix}
+      \times \cvtwo{x}{y} \le \cvtwo{4}{1}\text{, }x, y \ge 0\\
+      
+      \lvtwo{1}{1} \times \cvtwo{x}{y} = z (max)
+    \end{cases} \\
+    & =
+    \begin{cases}
+      \cvtwo{2x + 3y}{x - y} \le \cvtwo{4}{1}\text{, }x, y \ge 0\\
+      
+      x + y = z (max)
+    \end{cases}
+  \end{aligned}
+\]
+
+Si on applique ligne par ligne l'opérateur $\le$, on trouve:
+
+\[
+    \begin{cases}
+      2x + 3y \le 4 \text{, }x, y \ge 0 \\
+      x - y \le 1 \\
+      x + y = z (max)
+    \end{cases}
+\]
+
+\newpage
+\subsection{Définition: Forme Standard}
+Un programme $P$ est dit sous forme standard quand ses contraintes sont des équations, et non plus des inéquations.
+
+\[ PS =
+  \begin{cases}
+    A\vec{x} = \vec{c}\text{, } \vec{x} \ge 0 \\
+    \vec{f}\vec{x} = z (max)
+  \end{cases}
+\]
+
+\subsubsection{Exemple:}
+
+Soit $P$, un programme linéaire comprenant le système d'équations suivant:
+
+\[ c=
+  \begin{cases}
+    -x + 2y = 3 \\
+    5x + 4y = 2
+  \end{cases}
+\]
+
+ainsi qu'une fonction $f$ définie par le vecteur $\vec{f} = \lvtwo{1}{3}$ à maximiser. \\
+
+Alors en suivant les mêmes règles que pour la forme canonique, sa forme standard $PS$ s'écrit:
+
+\[
+  \begin{aligned}
+    PS =
+    \begin{cases}
+      \begin{pmatrix}
+        -1 &&  2 \\
+         5 &&  4 \\
+      \end{pmatrix}
+      \times \cvtwo{x}{y} = \cvtwo{3}{2}\text{, }x, y \ge 0\\
+      
+      \lvtwo{1}{3} \times \cvtwo{x}{y} = z (max)
+    \end{cases}
+  \end{aligned}
+\]
+
+\subsection{Cas de programmes non canoniques/standards}
+
+Il se peut qu'un programme ne soit pas composé seulement de contraintes $\le$, mais aussi d'équations ou d'inéquations $\ge$.
+Il existe des règles permettant d'écrire un programme sous forme canonique ou standard, en ré-écrivant certaines règles.
+
+\subsubsection{Mauvais opérateur d'inéquation canonique ($\ge$ ou $=$)}
+
+Quand on traite des inéquations, transformer un $\ge$ en $\le$ s'effectue en multipliant chaque coté par $-1$. \\
+Exemple: $x \ge 5 \Leftrightarrow -x \le -5$ \\
+
+Pour transformer un $=$, il suffit de contraindre deux fois. En effet, si $x \le y$ ET $x \ge y$ alors $x$ ne peut être que égal à $y$. En appliquant la méthode du dessus, on peut transformer ces deux contraintes en $\le$, en écrivant:\\
+
+% je ne sais pas si je devrais laisser ou pas l'alignement des operateurs
+$
+\begin{cases}
+	x &\le y \\ -x &\le -y
+\end{cases}
+$
+
+\newpage
+\subsubsection{Mauvaise, ou aucune contrainte de signe pour une variable}
+
+Normalement, chaque variable est sensée être positive, c'est ce qu'indique le $x,y \ge 0$ dans les formes canoniques et standards.
+
+Si jamais une variable est contrainte d'être négative et non pas positive, il suffit de la contraindre positive, et de changer son signe dans les (in)équations, et dans la fonction objective. \\
+
+Exemple:
+\[ \begin{aligned}
+    &\begin{cases}
+      2x + 3y \le 4 \text{, }x \le 0, y \ge 0  \; \text{(notez le } x \le 0 \text{ dans les contraintes de signe)}\\
+      x - y \le 1 \\
+      x + y = z (max)
+    \end{cases} \\
+	&\text{en effectuant la transformation $x' = -x$ on obtient:} \\
+    &\begin{cases}
+      -2x' + 3y \le 4 \text{, }x', y \ge 0  \; \text{(la contrainte est revenue à la normale, x' est positif)}\\
+      -x' - y \le 1 \\
+      -x' + y = z (max)
+    \end{cases} \\
+	&\text{ici, toutes les occurrences de $x$ sont transformées en $-x'$.}
+	\end{aligned}
+\]
+
+Si une variable n'est pas contrainte, il faut transformer cette variable en une soustraction de deux variables intermédiaires.
+En effet, si $x = x' - x''$ et $x', x'' \ge 0$, le cas où $x \le 0$ est rencontré si jamais $x' \ge x''$:
+
+\[
+  \begin{aligned}
+    &x \ge 0 &\Leftrightarrow \\
+    &x' - x'' \ge 0 &\Leftrightarrow \\
+    &x' \ge x'' &
+  \end{aligned}
+\]
+
+et le cas où $x \le 0$ est rencontré si $x' \le x''$:
+
+\[
+  \begin{aligned}
+    &x \le 0 &\Leftrightarrow \\
+    &x' - x'' \le 0 &\Leftrightarrow \\
+    &x' \le x'' &
+  \end{aligned}
+\]
+
+Exemple:
+\[ \begin{aligned}
+    &\begin{cases}
+      2x + 3y \le 4 \text{, }y \ge 0  \; \text{(notez l'absence de } x \text{ dans les contraintes de signe)}\\
+      x - y \le 1 \\
+      x + y = z (max)
+    \end{cases} \\
+	&\text{deviendra:} \\
+    &\begin{cases}
+      2x' - 2x'' + 3y \le 4 \text{, }x', x'', y \ge 0  \; \text{(la contrainte est revenue à la normale, x' et x'' sont positifs)}\\
+      x' - x'' - y \le 1 \\
+      x' - x'' + y = z (max)
+    \end{cases} \\
+	&\text{ici, toutes les occurrences de $x$ sont remplacées par les variables $x'$ et $x''$.}
+	\end{aligned}
+\]
+
+\newpage
+\subsubsection{Mauvais opérateur d'équation standard ($\le$ ou $\ge$)} 
+
+Si deux valeurs sont différentes, alors il existe une distance entre les deux.
+Si $x \le y$ alors il existe un réel $\delta$ tel que $x + \delta = y$.
+
+Démonstration:
+\[
+  \text{Si } \delta = y - x \text{ alors } x + \delta = x + y - x = y
+\]
+
+De ce fait, il suffit d'introduire une variable qui fait office de \underline{distance} ou d'\underline{écart} entre les deux parties de l'inéquation.
+
+Exemple:
+\[ \begin{aligned}
+    &\begin{cases}
+      2x - y \le 5  \text{, }x, y \ge 0  \\
+      -x + 5y = 10 \\
+      x + y = z (max)
+    \end{cases} \\
+	&\text{deviendra:} \\
+    &\begin{cases}
+      2x - y + \delta = 5  \text{, }x, y, \delta \ge 0  \\
+      -x + 5y = 10 \\
+      x + y = z (max)
+    \end{cases} \\
+	&\text{ici, la variable $\delta$ correspond a la distance entre $2x - y$ et $5$.}
+	\end{aligned}
+\]
+
+De la même manière que $x' et x''$ apparaissent comme des variables dans la partie \textbf{1.5.2} dans cet exemple, la variable $\delta$ fait pratie des inconnues, le vecteur des inconnues
+n'est donc plus $\vec{x} \cvtwo{x}{y}$ mais $\vec{x} \cvthree{x}{y}{\delta}$.
+La matrice $A$ et le vecteur $\vec{f}$ associés devront par conséquent avoir une colonne de plus pour chaque variable d'écart ajoutée.
+
+\[
+  \text{Ici, $A$ change de:} \\
+  \begin{pmatrix}
+     2 & -1 \\
+    -1 &  5
+  \end{pmatrix} \\
+  \text{à} \\
+  \begin{pmatrix}
+     2 & -1 & 1 \\
+    -1 &  5 & 0
+  \end{pmatrix} \\
+  \text{et } \vec{f} \text{ change de } \lvtwo{1}{1} \text{ à } \lvthree{1}{1}{0}
+\]
+
+
+Il faut ajouter autant de variables d'écart que d'inéquation $\le$ ou $\ge$ dans les contraintes !!
+Se faisant, on augmente d'autant la taille du vecteur d'inconnues, et de la matrice !!
+
+\newpage
+\section{Dual d'un programme linéaire}
+
+A tout programme linéaire $P$ on peut associed un \underline{dual} $D$ qui lui aussi est un programme linéaire.
+
+\subsection{Définition}
+
+Soit un programme linéaire $PC$ (qu'on appelle ici primal, en opposition à dual) sous forme canonique:
+
+\ProgLin{PC}
+
+On appelle dual de $PC$ le programme linéaire suivant
+
+\DualLin{D}
+
+Avec $\vec{y}$ le vecteur des inconnues de $D$, $A$ la matrice du programme et de son dual, $\vec{f}$ le vecteur de contrainte de $D$, et $\vec{c}$ sa fonction objective.
+
+\subsubsection{Remarque:}
+
+Le vecteur de contraintes $\vec{c}$ de $PC$ est devenu la fonction objective de $D$, et inversement, $\vec{f}$ est devenu le vecteur contrainte de $D$.
+Le sens de l'inégalité a aussi changé. Toutes les règles de construction d'un dual sont expliquées dans la partie \textbf{2.4}
+
+Le vecteur $\vec{y}$ est un vecteur ligne, avec autant d'éléments que de contraintes dans $PC$.
+$\vec{y}$ étant un vecteur ligne, il est à gauche pour la multiplication avec $A$ et $\vec{c}$ pour respecter les règles de mutliplication des matrices.
+
+\subsubsection{Exemple:}
+
+\[
+  \begin{aligned}
+  &\text{Si} \\
+  &P =
+  \begin{cases}
+    2x_1 + 3x_2 -  x_3 \le 5 \;\; x_1, x_2, x_3 \ge 0 \\
+    4x_1 - 2x_2 + 4x_3 \le 3\\
+    2x_1 +  x_2 + 3x_3 = z (max)
+  \end{cases}  \\
+  &\text{Alors} \\
+  &D =
+  \begin{cases}
+     2y_1 + 4y_2 \ge 2 \;\; y_1, y_2 \ge 0 \\
+     3y_1 + 2y_2 \ge 1 \\
+    - y_1 + 4y_2 \ge 3 \\
+    5y_1 + 3y_2 = w (min)
+  \end{cases}
+  \end{aligned}
+\]
+
+\newpage
+
+Ecrit sous forme matricielle, avec $\vec{x} = \cvthree{x_1}{x_2}{x_3}$ et $\vec{y} = \lvtwo{y_1}{y_2}$ on obtient:
+
+\[
+  \begin{aligned}
+  &\text{Si} \\
+  &P =
+  \begin{cases}
+    \begin{pmatrix}
+       2 &  3 & -1 \\
+       4 & -2 &  4
+    \end{pmatrix} \times \vec{x} \le \cvtwo{5}{3} \;\; \vec{x} \ge 0 \\
+    \lvthree{2}{1}{3} \times \vec{x} = z (max)
+  \end{cases}  \\
+  &\text{Alors} \\
+  &D =
+  \begin{cases}
+    \vec{y} \times
+    \begin{pmatrix}
+      2 & 3 & -1 \\
+      4 & -2 & 4
+    \end{pmatrix} \ge \lvthree{2}{1}{3} \;\; \vec{y} \ge 0 \\
+    \vec{y} \times \cvtwo{5}{3} = w (min)
+  \end{cases}
+  \end{aligned}
+\]
+
+\subsection{Remarques}
+
+\begin{itemize}
+  \item Il y a autant de variables $y_i$ que de contraintes de $PC$.
+  \item On peut associer chaque variable $y_i$ à la contrainte $c_i${\small*}.
+  \item L'imposition de signe d'une variable $y_i$ dépend du type de la contrainte $c_i$ ($\le$, $\ge$, ou $=$).
+    Dans l'exemple, toutes les contraintes étaient du style $\le$, alors les variables $\vec{y}$ sont positives.
+\end{itemize}
+
+
+\noindent {\small \textit{* $c_i$ représente la ième (in)équation du primal. \\ Dans l'éxemple du dessus, $c_2$ est $4x_1 - 2x_2 + 4x_3 \le 3$}}
+
+\subsection{Théorème}
+  Le dual du dual est le primal.
+
+\subsection{Règles de construction du dual}
+
+\begin{tabular}{|l|l|}
+  \hline
+    \textbf{Primal} & \textbf{Dual} \\
+  \hline
+    fonction à maximiser & fonction à minimiser \\
+  \hline
+    fonction à minimiser & fonction à maximiser \\
+  \hline
+    contrainte $c_i$ est $\le$ & variable $y_i$ positive \\
+  \hline
+    contrainte $c_i$ est $\ge$ & variable $y_i$ négative \\
+  \hline
+    contrainte $c_i$ est $=$ & $y_i$ n'a pas d'imposition de signe \\
+  \hline
+    variable $x_i$ positives & contrainte $i$ est $\ge$ \\
+  \hline
+    variable $x_i$ négatives & contrainte $i$ est $\le$ \\
+  \hline
+    variable $x_i$ n'a pas de signe & contrainte $i$ est $=$ \\
+  \hline
+\end{tabular}
+
+\end{document}
+

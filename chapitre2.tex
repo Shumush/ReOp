@@ -1,0 +1,106 @@
+\documentclass[a4paper, 11pt]{article}
+
+\usepackage[utf8]{inputenc}
+\usepackage[T1]{fontenc}
+\usepackage[francais]{babel}
+\usepackage{amsfonts}
+\usepackage{sectsty}
+\usepackage{amsmath, amssymb}
+
+% custom package to speed up writing math objects
+\usepackage{speedmath}
+
+\sectionfont{\fontsize{14}{15}\selectfont}
+\subsectionfont{\fontsize{12}{13}\selectfont}
+
+\begin{document}
+
+\title{Recherche Operationelle\\Chapitre 2: Résolution de programmes linéaires}
+\author{Arthur Blanleuil}
+
+\maketitle
+
+\section{Quelques Théorèmes}
+
+\subsection{Théorème 1}
+
+Soit $A \in \M_{m,n}(\R)$, $\vec{b}$ un vecteur colonne de dimension m, pour la suite du cours, on considère le système linéaire suivant:
+
+\begin{equation}A\vec{x} = \vec{b}\end{equation}
+
+\subsubsection{Définition 1}
+
+Deux systèmes linéaires $A\vec{x} = \vec{b}$ et $A'\vec{x} = \vec{b'}$ sont dits équivalents si et seulement si ils ont les mêmes solutions.
+
+\subsubsection{Théorème 1}
+
+Etant donné $(1)$, on a trois cas possibles concernant le rang de $A$:
+
+\begin{itemize}
+  \item $rang(A) = m$ : on dit que le système est de \textbf{plein rang}
+    dans ce cas, $m \le n$ et l'ensemble des solutions $S = \{ \vec{x} \; ; \; A\vec{x} = \vec{b} \}$ est non nul
+    et $|S| = 1 \Leftrightarrow m = n$ (si la solution est unique, alors $A$ est une matrice carré)
+  \item $rang(A) < m$ et le système n'a pas de solutions alors $\exists \vec{y} \; ; \; \vec{y}A = \vec{0}$ et $\vec{y} . \vec{b} \ne 0$
+  \item $rang(A) < m$ et le système a des solutions alors $\exists \vec{y} \ne \vec{0} \; ; \; \vec{y}A = \vec{0}$ et $\vec{y} . \vec{b} \ne 0$
+    ET $\exists I \in \{ 1 .. m \} \; ; \; A_I\vec{x} = \vec{b_I}$ et $A$ est de plein rang.
+\end{itemize}
+
+
+\subsubsection{Remarque}
+$I$ n'est pas unique en général.
+
+Si les systèmes $A\vec{x} = \vec{b}$ et $A'\vec{x} = \vec{b'}$ sont équivalents, alors il éxiste une matrice $B \in \M_{m,m}(\R)$ inversible
+telle que $A' = BA$ et $\vec{b'} = B\vec{b}$
+
+\subsubsection{Définition 2}
+
+La matrice $(A,\vec{b}) \in \M_{m,n+1}(\R)$ est appelée la \underline{matrice augmentée} du système linéaire $(1)$
+
+\subsection{Théorème 2}
+
+Soit $B \in \M_{m,m}(\R)$ une matrice non singulère (c'est à dire $rang(B) = m$)
+le système linéaire $BA\vec{x} = B\vec{b}$ est équivalent à (1)
+
+Dit autrement, toute transformation linéaire de la matrice et du vecteur contrainte d'un système linéaire
+donne un système équivalent.
+
+\subsubsection{Remarque}
+
+
+Les transformations équivalentes d'un système linéaire à un autre peuvent s'exprimer sous la forme
+de matrices "presque comme" des matrice identités. On distingue 2 cas très utiles plus tard quand
+nous aborderons la méthode du simplex, pour faire apparaitre une certaine "forme" de système.
+
+
+\begin{enumerate}
+  \item $B$ est une matrice de cette forme:
+    \[
+      \begin{pmatrix}
+        1      & 0      & \cdots    & \cdots & 0      \\
+        0      & \ddots & \ddots    &        & \vdots \\
+        \vdots & \ddots & B_{r}^{r} & \ddots & \vdots \\
+        \vdots &        & \ddots    & \ddots & 0      \\
+        0      & \cdots & \cdots    & 0      & 1 
+      \end{pmatrix}
+    \] \\
+    c'est à dire une matrice consistuée d'une diagonale de 1, sauf à $B_{r}^{r}$ où $r = rang(A)$
+    à ce moment, $B$ est de plein rang si et seulement si $B_{r}^{r} \ne 0$ (En effet, le vecteur nul ne peut faire partie d'une base).
+
+    Ce genre de matrice ne fait que modifier une ligne du système d'équations en la multipliant par un réel.
+    Cette transformation est utile pour faire apparaitre un 1 dans les coefficients d'une ligne.
+
+  \item $B$ est une matrice identitée avec la valeur $B_{k}^{r} = \alpha \ne 0$. Cette forme permet de remplacer la $r$-ième équation
+    (qu'on appellera $L_{r}$) par cette valeur : $L'_{r} = L_{r} + \alpha L_{k}$. On peut ainsi faire apparaitre des 0 à des endroits de
+    $L_{r}$. \\
+    Attention, ici $r$ n'a rien a voir avec le rang de $B$.
+\end{enumerate}
+
+\subsection{Définition 3}
+
+Résoudre le système linéaire $A\vec{x} = \vec{b}$ c'est:
+\begin{itemize}
+  \item Démontrer qu'il n'a pas de solution
+  \item Trouver un système équivalent tel que $\exists \; J \in \{ 1 ... n \} \;$tel que$\; A'^{J}$ est à une permutation de colonne près d'être l'identité.
+\end{itemize}
+
+\end{document}
