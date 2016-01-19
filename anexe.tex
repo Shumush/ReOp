@@ -1,0 +1,116 @@
+\documentclass[a4paper, 11pt]{article}
+
+\usepackage[utf8]{inputenc}
+\usepackage[T1]{fontenc}
+\usepackage[francais]{babel}
+\usepackage{amsfonts}
+\usepackage{sectsty}
+\usepackage{amsmath, amssymb}
+
+% custom package to speed up writing math objects
+\usepackage{speedmath}
+
+\sectionfont{\fontsize{14}{15}\selectfont}
+\subsectionfont{\fontsize{12}{13}\selectfont}
+
+\begin{document}
+
+\title{Introduction au calcul matriciel et à l'algèbre linéaire}
+\author{Arthur Blanleuil}
+
+\maketitle
+
+\section{Shoubidou !}
+
+La recherche opérationnelle s'appuie énormément sur les outils mathématiques, notemment l'algèbre linéaire
+de ce fait, un minimum de connaissance dans ce domaine s'impose. Le but de cet article est d'apprendre ce
+$"minimum"$ à toute personne qui voudrait apprendre les méthodes de résolutions de programmes linéaires. \\ \\
+
+Il y aura beaucoup d'allusions à l'informatique, par exemple, nous associeront les matrices à des tableaux à
+deux dimensions.
+
+\section{Vecteurs et Matrices}
+
+\subsection{Les vecteurs}
+
+Un \underline{vecteur} représente un assortiment de valeurs, chacunes appartenant à des ensembles.
+Par exemple, les coordonnées d'un point dans l'espace peuvent être représentées par un vecteur contenant
+3 réels.
+
+\[
+  \vec{p} = \cvthree{x}{y}{z}
+\]
+
+Ses trois composantes sont dans l'ensemble des réels (on note $x, y, z \in \R$), par conséquent le vecteur $\vec{p}$
+se trouve dans l'ensemble $\R \times \R \times \R = \R^3$. On note $\vec{p} \in \R^3$.
+
+En C, on peut voir un vecteur comme une structure. Un vecteur comme $\vec{p}$ peut se représenter sous la forme d'une matrice
+contenant 3 \texttt{double}s
+
+Généralement, en mathématiques, les valeurs d'un vecteur viennent du même ensemble, on a rarement un vecteur qui contient un
+réel et un complexe.
+
+Les valeurs d'un vecteur $\vec{v} \in \K^n$ donné sont appelés des \underline{scalaires} dans l'ensemble $\K$
+
+\newpage
+
+\subsection{Les matrices}
+
+Les matrices sont des objets mathématiques qui peuvent s'apparenter à des tableaux à deux dimensions.
+Une matrice a un nombre de lignes, et un nombre de colonnes caractérisants ses dimensions.
+
+L'ensemble des matrices avec $m$ lignes, et $n$ colonnes, dont les valeurs sont dans l'ensemble $\K$ se note ainsi: $\Mat{m}{n}{\K}$
+
+Une telle matrice $A$ appartenant donc à cet ensemble se note $A \in \Mat{m}{n}{\K}$. \\
+
+Soit $A \in \Mat{2}{2}{\R}$, $A = \begin{pmatrix} a & b \\ c & d \end{pmatrix}$.
+Alors $a$, $b$, $c$, et $d$ sont des réels, et sont appelés les coefficients de $A$
+
+\subsubsection{Notations sur les matrices}
+
+On appelle $A_i$ la $i$-ème ligne de la matrice $A$.
+On appelle $A^{j}$ la $j$-ième colonne de la matrice $A$. \\
+
+Par composition, on appelle $A_{i}^{j}$ la valeur de la matrice qui se trouve
+à la ligne $i$ et à la colonne $j$ (en C, on écrit \texttt{A[i][j]}). \\
+
+On peut non pas utiliser des indices seuls, mais des ensembles d'indices.
+
+Par exemple, si j'appelle $I$ un ensemble d'indices entre $1$ et $m$,
+la matrice $A_{I}$ est la matrice qui contient toutes les lignes de $A$
+dont les indices se trouvent dans $I$.
+
+Par conséquent, une telle matrice $A_{I}$ contient $\abs{I}$ lignes
+(la notation $\abs{I}$ représente le cardinal de $I$, qui est le nombre d'élements
+dans $I$) \\
+
+Soit $A \in \Mat{3}{3}{\R} \; ; \; A = \begin{pmatrix} a&b&c\\d&e&f\\g&h&i\end{pmatrix}$
+et $I = \{1, 3\}$, la matrice $A_{I}$ est alors égale à $\begin{pmatrix}a&b&c\\g&h&i\end{pmatrix}$ \\
+
+On note de la même manière pour les colonnes.
+Si on prend la matrice $A$ de l'exemple précédent, et $J = \{1, 2\}$ alors $A^{J} = \begin{pmatrix}a&b\\d&e\\g&h\end{pmatrix}$
+
+\newpage
+\subsubsection{Opérations sur les matrices}
+
+L'addition s'effectue termes par termes, et les matrices DOIVENT avoir le même nombre de colonnes et de lignes.
+Cette opération est commutative ($A + B = B + A$) et associative ($A + (B + C) = (A + B) + C$)
+
+Soient $A, B, C \in \Mat{2}{2}{\R} \; ; \; A = \begin{pmatrix}a&b\\c&d\end{pmatrix} \; ; \; B =
+\begin{pmatrix}a'&b'\\c'&d'\end{pmatrix} \; ; \; C = A + B$.
+Alors $C = \begin{pmatrix}a+a'&b+b'\\c+c'&d+d'\end{pmatrix}$ \\ \\
+
+La multiplication est non commutative ($A \times B \ne B \times A$), mais elle est associative.
+
+L'opération $A \times B$ ne peut s'effectuer que si le nombre de colonnes de $A$ est égal au nombre de lignes de $B$
+
+Si $A \in \Mat{m}{n}{\R}$ et $B \in \Mat{n}{p}{\R}$, alors l'opération $A \times B$ est possible, et la matrice résultante
+de cette opération est une matrice avec $m$ lignes et $p$ colonnes. \\ \\
+
+Soit $C$ la matrice résultante de $A \times B$. Alors $C \in \Mat{m}{p}{\R}$ \\
+et $C_{i}^{j} = \sum_{k = 0}^{n} A_{i}^{k} B_{k}^{j}$. \\ \\
+
+La valeur de la case au croisement de la ligne $i$ et la colonne $j$ est l'addition des coefficients de la ligne $A_i$
+multipliés uns à uns par ceux de la colonne $B^{j}$
+
+\end{document}
