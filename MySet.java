@@ -64,4 +64,34 @@ class MySet extends List<SubSet> {
       }
     }
   }
+
+  /**
+   * change this en l'union de lui meme et de celui en
+   * parametre
+   * @param s : MySet le deuxieme set
+   */
+  public void union(MySet s) {
+    Iterator<SubSet> it = this.iterator();
+
+    // pour tout SubSet de this
+    while (!it.isOnFlag()) {
+      SubSet ss1 = it.getValue();
+      Iterator<SubSet> jt = s.iterator();
+
+      // pour tout SubSet de s
+      while (!jt.isOnFlag()) {
+        SubSet ss2 = it.getValue();
+
+
+        // si les subset contiennent les memes
+        // plages de nombres (definies par le rank)
+        // alors on unie leur SubSet, et on passe
+        // au SubSets suivants
+        if (ss1.rank == ss2.rank) {
+          ss1.set.union(ss2.set);
+          break;
+        }
+      }
+    }
+  }
 }
