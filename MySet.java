@@ -31,6 +31,8 @@ class MySet extends List<SubSet> {
       // cf. definition de l'appartenance a un MySet du TP5
       if (sub.rank == x/256 && sub.set.contains(x%256))
         return true;
+
+      it.goForward();
     }
 
     return false;
@@ -61,6 +63,8 @@ class MySet extends List<SubSet> {
           // break, car seulement un SubSet contient un tel x
           break;
         }
+
+        it.goForward();
       }
     }
   }
@@ -91,7 +95,11 @@ class MySet extends List<SubSet> {
           ss1.set.union(ss2.set);
           break;
         }
+
+        jt.goForward();
       }
+
+      it.goForward();
     }
   }
 }
