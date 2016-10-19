@@ -3,11 +3,17 @@ import java.util.Scanner;
 
 class MySet extends List<SubSet> {
 
+  private static final int MAX_RANG = 128;
+  private static final SubSet FLAG_VALUE =
+    new SubSet(MAX_RANG, new SmallSet());
+
   // besoin d'un scanner pour lire les nombres entres par
   // l'utilisateur
   private static final Scanner in = new Scanner(System.in);
 
   public MySet() {
+    super();
+    setFlag(FLAG_VALUE);
   }
 
   /**
