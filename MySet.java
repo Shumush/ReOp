@@ -35,4 +35,33 @@ class MySet extends List<SubSet> {
 
     return false;
   }
+
+  /**
+   * supprime du set toutes les valeurs saisies par l'utilisateur
+   * et affiche le nouveau contenu. (la saisie s'arrete a l'input -1)
+   */
+  public void remove() {
+    
+    System.out.println("Please, input the values to remove : ");
+
+    int x = 0;
+
+    // a chaque tour de boucle, lis un nouvel entier
+    // et s'arrete a -1
+    while ((x = in.nextInt()) != -1) {
+      Iterator<SubSet> it = this.iterator();
+
+      // meme style de boucle que dans contains()
+      while (!it.isOnFlag()) {
+        SubSet sub = it.getValue();
+
+        if (sub.rank == x/256 && sub.set.contains(x%256)) {
+          sub.set.remove(x%256);
+
+          // break, car seulement un SubSet contient un tel x
+          break;
+        }
+      }
+    }
+  }
 }
