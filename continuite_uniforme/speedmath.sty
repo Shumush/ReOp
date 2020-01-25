@@ -1,0 +1,38 @@
+%% speedmath.sty
+%%
+%% this package adds some new features
+%% to speed up math expressions writing like
+%% vectors...
+%%
+
+\NeedsTeXFormat{LaTeX2e}[1994/06/01]
+\ProvidesPackage{speedmath}[2015/02/04 Custom Package]
+
+\RequirePackage{amsmath}
+
+% line/column 2d vectors
+\newcommand{\lvtwo}[2]{\begin{pmatrix} #1 & #2 \end{pmatrix}}
+\newcommand{\cvtwo}[2]{\begin{pmatrix} #1 \\ #2 \end{pmatrix}}
+
+% line/column 3d vectors
+\newcommand{\lvthree}[3]{\begin{pmatrix} #1 & #2 & #3 \end{pmatrix}}
+\newcommand{\cvthree}[3]{\begin{pmatrix} #1 \\ #2 \\ #3 \end{pmatrix}}
+
+
+\newcommand{\set}[1]{\mathbb{#1}}
+\newcommand{\C}{\set{C}}
+\newcommand{\R}{\set{R}}
+\newcommand{\Q}{\set{Q}}
+\newcommand{\N}{\set{N}}
+\newcommand{\Z}{\set{Z}}
+%\newcommand{\M}{\set{M}}
+\newcommand{\K}{\set{K}}
+
+\newcommand{\ProgLin}[1]{\[ #1 = \begin{cases} A\vec{x} \le \vec{c}\text{, } \vec{x} \ge 0 \\ \vec{f}\vec{x} = z (max) \end{cases}\]}
+\newcommand{\DualLin}[1]{\[ #1 = \begin{cases} \vec{y}A \ge \vec{f}\text{, } \vec{y} \ge 0 \\ \vec{y}\vec{c} = w (min) \end{cases}\]}
+
+\newcommand{\abs}[1]{\lvert #1 \lvert}
+
+\newcommand{\Mat}[3]{\M_{#1,#2}(#3)}
+\endinput
+

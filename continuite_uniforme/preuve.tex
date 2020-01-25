@@ -78,11 +78,12 @@ Intéressons-nous à $f : x \to x^2$ sur l'intervalle $\left[a;\;b\right]$.
 Prenons la borne de notre intervalle la plus
 éloignée de $0$ : $A = max(\abs{a}, \abs{b})$.
 
-Par l'inégalité triangulaire de la valeur absolue, on a:
+Par l'inégalité triangulaire de la valeur absolue [1], on a:
 
-\[
-  \forall (x, y) \in [a;\;b]^2, \abs{x + y} \le \abs{x} + \abs{y} \le A+A = 2A
-\]
+\begin{align}
+  &\forall x \in [a;\;b], \; \abs{x} \le A\\
+  &\forall (x, y) \in [a;\;b]^2, \; \abs{x + y} \le \abs{x} + \abs{y} \le A+A = 2A
+\end{align}
 
 Si pour tout $\epsilon > 0$, on prend
 \[
@@ -91,18 +92,13 @@ Si pour tout $\epsilon > 0$, on prend
 
 Alors pour tout $(x, y) \in [a;\;b]^2$ on a:
 \begin{align*}
-  \abs{x^2 - y^2} &= \abs{(x - y)(x + y)}\\
-                  &= \abs{x-y}\abs{x+y}\\
-                  &\le \abs{x-y}2A\\
-                  &< \frac{\epsilon}{2A}2A \;\; (*)\\
+  \abs{x^2 - y^2} &= \abs{(x - y)(x + y)}&\\
+                  &= \abs{x-y}\abs{x+y}&[2]\\
+                  &\le \abs{x-y}2A &[3]\\
+                  &< \frac{\epsilon}{2A}2A &[4]\\
                   &< \epsilon
 \end{align*}
 
-\begin{itemize}
-  \item[$(*)$] On se permet de passer de $\le$ à $<$ parce que d'après la
-    définition de la continuité uniforme, on ne s'occupe que des $x$ et $y$ qui
-    vérifient $\abs{x - y} < \delta$
-\end{itemize}
 \bigskip
 
 \fbox{
@@ -114,11 +110,16 @@ quelconque $[a;\;b]$.
 }
 
 \bigskip
-
-Donc normalement, quel que soit l'intervalle ($[1;2]$, $[-10000000;10000000]$),
-tant qu'il est fermé (bornes incluses) et borné (bornes finies), genre pas de
-borne infinie comme
-$]-\infty; 0]$, bah ta fonction carré sur cet intervalle est uniformément
-continue.
-
+\begin{itemize}
+  \item[1] la valeur absolue est une distance dans \R, et toute distance vérifie
+    l'inégalité triangulaire.
+  \item[2] $\abs{AB} = \abs{A}\abs{B}$ (Tu peux le prouver par énumération
+    sur les combinaisons de signes de $A$ et de $B$).
+  \item[3] Une valeur absolue est forcément positive, alors la remplacer par
+    une quantité plus petite mais toujours positive ($A$, d'après l'équation 2)
+    modifie le signe de l'égalité.
+  \item[4] On se permet de passer de $\le$ à $<$ parce que d'après la
+    définition de la continuité uniforme, on ne s'occupe que des couples $(x,y)$ qui
+    vérifient $\abs{x - y} < \delta$
+\end{itemize}
 \end{document}
