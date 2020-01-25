@@ -1,0 +1,124 @@
+\documentclass[a4paper, 14pt]{article}
+
+\usepackage[utf8]{inputenc}
+\usepackage[T1]{fontenc}
+\usepackage{fontspec}
+\usepackage[francais]{babel}
+\usepackage{amsfonts}
+\usepackage{sectsty}
+\usepackage{amsmath, amssymb}
+
+\usepackage{speedmath}
+
+%\sectionfont{\fontsize{14}{15}\selectfont}
+%\subsectionfont{\fontsize{12}{13}\selectfont}
+
+\begin{document}
+
+\title{Continuité uniforme de $x \to x^2$}
+\author{Arthur Blanleuil}
+
+\maketitle
+
+\section{Définitions}
+
+On rappelle qu'une fonction $f : \set{A} \to \set{B}$ est uniformément continue
+dans un intervalle $\set{I} \subseteq \set{A}$ si et seulement si:
+
+\[
+  \forall \epsilon > 0, \exists \delta > 0 \;\;|\;\; \forall (x, y) \in
+  \set{I}^2,\; \abs{x - y} < \delta \implies \abs{f(x) - f(y)} < \epsilon
+\]
+
+Autrement dit, pour tout $\epsilon$ assez petit (mais non nul), il existe une distance non
+nulle $\delta$ telle que pour tout $x$ et $y$ dans $\set{I}$, si la distance de
+$x$ à $y$ est plus petite que $\delta$ alors la distance entre $f(x)$ et $f(y)$
+est plus petite que $\epsilon$.
+
+\section{Dans $\R$}
+
+Supposons $f : x \to x^2$ uniformément continue dans $\R$. Prenons
+$\epsilon = 1$. Si $f$ est uniformément continue, alors il existe un $\delta$
+tel que
+
+\[
+  \forall (x, y) \in \R^2, \;\; \abs{x - y} < \delta
+  \implies \abs{x^2 - y^2} < 1
+\]
+
+Prenons 
+\[
+  x = \frac{1}{\delta}\;\;\;\;\;\; y = \frac{1}{\delta} + \frac{\delta}{2}
+\]
+
+Alors
+
+\[
+  \abs{x - y} = \frac{\delta}{2} < \delta
+\]
+
+Vérifions que ces valeurs vérifient la continuité uniforme: $\abs{x^2 - y^2} < 1$
+\begin{align*}
+  \abs{x^2 - y^2} &= \left\lvert \left(\frac{1}{\delta}\right)^2 - \left(\frac{1}{\delta} +
+  \frac{\delta}{2}\right)^2 \right\lvert \\
+  &= \left\lvert \frac{1}{\delta^2} - \frac{1}{\delta^2} -
+    2\frac{1}{\delta}\frac{\delta}{2} - \frac{\delta^2}{4} \right\lvert\\
+  &= \left\lvert - 1 - \frac{\delta^2}{4} \right\lvert\\
+  &= \left\lvert - \left(1 + \frac{\delta^2}{4} \right) \right\lvert \\
+  \abs{x^2 - y^2} &= \boxed{1 + \frac{\delta^2}{4}}
+\end{align*}
+
+Nous avons trouvé un $x$ et un $y$ qui contredisent la définition de la
+continuité uniforme pour $\epsilon = 1$. La fonction $f : x \to x^2$ n'est donc
+\textbf{pas uniformément continue sur $\R$}.
+
+\section{Dans un intervalle fermé borné $\left[a;\;b\right]$}
+
+Intéressons-nous à $f : x \to x^2$ sur l'intervalle $\left[a;\;b\right]$.
+Prenons la borne de notre intervalle la plus
+éloignée de $0$ : $A = max(\abs{a}, \abs{b})$.
+
+Par l'inégalité triangulaire de la valeur absolue, on a:
+
+\[
+  \forall (x, y) \in [a;\;b]^2, \abs{x + y} \le \abs{x} + \abs{y} \le A+A = 2A
+\]
+
+Si pour tout $\epsilon > 0$, on prend
+\[
+  \delta = \frac{\epsilon}{2A}
+\]
+
+Alors pour tout $(x, y) \in [a;\;b]^2$ on a:
+\begin{align*}
+  \abs{x^2 - y^2} &= \abs{(x - y)(x + y)}\\
+                  &= \abs{x-y}\abs{x+y}\\
+                  &\le \abs{x-y}2A\\
+                  &< \frac{\epsilon}{2A}2A \;\; (*)\\
+                  &< \epsilon
+\end{align*}
+
+\begin{itemize}
+  \item[$(*)$] On se permet de passer de $\le$ à $<$ parce que d'après la
+    définition de la continuité uniforme, on ne s'occupe que des $x$ et $y$ qui
+    vérifient $\abs{x - y} < \delta$
+\end{itemize}
+\bigskip
+
+\fbox{
+  \parbox{\textwidth}{
+On a bien vérifié que la fonction
+$f:x\to x^2$ est uniformément continue sur un intervalle fermé et borné
+quelconque $[a;\;b]$.
+}
+}
+
+\bigskip
+
+Donc normalement, quel que soit l'intervalle ($[1;2]$, $[-10000000;10000000]$),
+tant qu'il est fermé (bornes incluses) et borné (bornes finies), genre pas de
+borne infinie comme
+$]-\infty; 0]$, bah ta fonction carré sur cet intervalle est uniformément
+continue.
+
+\end{document}
